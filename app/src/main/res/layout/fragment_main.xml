@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_main"
+    android:paddingTop="@dimen/padding_main_buttons_top"
+    android:gravity="center_horizontal">
+
+    <Button android:id="@+id/button_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:layout_marginBottom="@dimen/margin_button_bottom"
+        android:text="@string/main_activity" />
+
+    <Button android:id="@+id/button_hit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:layout_marginBottom="@dimen/margin_button_bottom"
+        android:text="@string/main_hit" />
+
+    <Button android:id="@+id/button_award"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:layout_marginBottom="@dimen/margin_button_bottom"
+        android:text="@string/main_award" />
+
+    <Button android:id="@+id/button_phyco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:layout_marginBottom="@dimen/margin_button_bottom"
+        android:text="@string/main_phyco" />
+
+    <Button android:id="@+id/button_play"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/play"
+        android:layout_marginBottom="@dimen/margin_button_bottom"
+        android:text="@string/main_play" />
+</LinearLayout>
