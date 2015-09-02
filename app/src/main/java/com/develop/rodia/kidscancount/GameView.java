@@ -51,7 +51,7 @@ public class GameView extends SurfaceView {
                                        int width, int height) {
             }
         });
-        bmpBlood = BitmapFactory.decodeResource(getResources(), R.drawable.blood1);
+        bmpBlood = BitmapFactory.decodeResource(getResources(), R.drawable.circle);
     }
 
     private void createSprites() {
@@ -77,9 +77,11 @@ public class GameView extends SurfaceView {
     @Override
     protected void onDraw(Canvas canvas) {
         //canvas.drawColor(Color.BLACK);
+        if (canvas == null) return;
         Bitmap bg =  BitmapFactory.decodeResource(getResources(), R.drawable.bgcielo);
         canvas.drawBitmap(bg, 0, 0, null);
         for (int i = temps.size() - 1; i >= 0; i--) {
+            temps.get(i).setCount(i + 1);
             temps.get(i).onDraw(canvas);
         }
         for (Sprite sprite : sprites) {
