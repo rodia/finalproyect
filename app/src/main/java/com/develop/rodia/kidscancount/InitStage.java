@@ -1,11 +1,14 @@
 package com.develop.rodia.kidscancount;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.develop.rodia.kidscancount.data.ResultContract;
 import com.develop.rodia.kidscancount.model.StageModel;
@@ -31,7 +35,6 @@ public class InitStage extends ActionBarActivity {
                     .commit();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,6 +68,8 @@ public class InitStage extends ActionBarActivity {
             Button button = (Button) rootView.findViewById(R.id.send_init_stage);
 
             button.setOnClickListener(new View.OnClickListener() {
+                public static final String LOG_CLASS = "PlacehoderFragment";
+
                 @Override
                 public void onClick(View v) {
                     EditText name_stage = (EditText)rootView.findViewById(R.id.name_stage);
@@ -72,7 +77,6 @@ public class InitStage extends ActionBarActivity {
 
                     if (!name_stage.getText().equals("") && !total_for_count.getText().equals("")) {
                         StageModel stage = new StageModel();
-
                         long stage_id = stage.saveStage(name_stage.getText().toString(),
                                 total_for_count.getText().toString(), rootView.getContext());
 

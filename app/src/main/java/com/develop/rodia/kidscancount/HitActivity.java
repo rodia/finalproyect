@@ -1,5 +1,7 @@
 package com.develop.rodia.kidscancount;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Toast;
 
 
 public class HitActivity extends ActionBarActivity {

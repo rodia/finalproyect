@@ -11,9 +11,8 @@ public class PlayActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(new PaintDragObject(this));
+        setContentView(new GameView(this));
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

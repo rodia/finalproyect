@@ -82,4 +82,14 @@ public class ResultContract {
         public static final String COLUMN_LEVEL = "level";
         public static final String COLUMN_TYPE = "type";
     }
+
+    /**
+     * Table definitio for save the current element
+     * @version 0.1
+     */
+    public static final class CurrentEntry implements  BaseColumns {
+        public static final String TABLE_NAME = "current";
+
+        public static final String COLUMN_CURRENT = "current";
+    }
 }

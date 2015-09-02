@@ -2,7 +2,9 @@ package com.develop.rodia.kidscancount.model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.develop.rodia.kidscancount.data.KCCDbHelper;
 import com.develop.rodia.kidscancount.data.ResultContract;
@@ -12,6 +14,8 @@ import com.develop.rodia.kidscancount.data.ResultContract;
  */
 public class StageModel {
 
+    private static final String LOG_CLASS = "StageModel";
+
     /**
      * Save record to table stage.
      * @param resultValues
@@ -19,11 +23,40 @@ public class StageModel {
      */
     public long setDBStage(Context context, ContentValues resultValues) {
         SQLiteDatabase db = new KCCDbHelper(context).getWritableDatabase();
-
         long resultRowId = db.insert(ResultContract.StageEntry.TABLE_NAME, null, resultValues);
+        Log.d(LOG_CLASS, "Stage id: " + resultRowId);
+
+        db.close();
         return resultRowId;
     }
 
+    /**
+     *
+     * @param context
+     * @return
+     */
+    public long getCurrent(Context context) {
+        long current = 0;
+        SQLiteDatabase db = new KCCDbHelper(context).getWritableDatabase();
+
+        String sql = "SELECT _ID FROM stage";
+
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            String value = cursor.getString(0);
+            Log.d(LOG_CLASS, "Stage value: " + value);
+            if (value != null) {
+                current = Long.parseLong(value);
+            } else {
+                current = 10;
+            }
+        }
+        db.close();
+        Log.d(LOG_CLASS, "Element " + current);
+        return current;
+    }
     /**
      * Save record to table resource.
      * @param context
@@ -33,6 +66,8 @@ public class StageModel {
     public long setDBResource(Context context, ContentValues resultValues) {
         SQLiteDatabase db = new KCCDbHelper(context).getWritableDatabase();
         long resultRowId = db.insert(ResultContract.ResourceEntry.TABLE_NAME, null, resultValues);
+        Log.d(LOG_CLASS, "Resource id: " + resultRowId);
+        db.close();
         return resultRowId;
     }
 

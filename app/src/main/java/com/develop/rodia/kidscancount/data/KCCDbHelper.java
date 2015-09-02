@@ -12,7 +12,7 @@ public class KCCDbHelper extends SQLiteOpenHelper {
     /**
      * @var actual version to kcc app.
      */
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
 
     /**
      * @var database name

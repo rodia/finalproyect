@@ -11,6 +11,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -19,6 +23,7 @@ import android.widget.FrameLayout;
 
 import com.develop.rodia.kidscancount.data.KCCDbHelper;
 import com.develop.rodia.kidscancount.data.ResultContract;
+import com.develop.rodia.kidscancount.model.StageModel;
 
 import java.util.Random;
 
@@ -27,7 +32,7 @@ import java.util.Random;
  *
  * @version 0.1
  */
-public class PaintDragObject extends View {
+public class PaintDragObject extends View implements SensorEventListener {
     private static final int DEFAULT_COUNT_VALUES = 5;
     private static final String LOG_CLASS = PaintDragObject.class.getSimpleName();
     private static final int DEFAULT_WIDTH_DEVICE = 600;
@@ -37,7 +42,9 @@ public class PaintDragObject extends View {
     private int objectID = 0;
     private MotionEvent event;
 
-    private int currentStage;
+    private SensorManager mSensorManager = null;
+
+    private static int currentStage;
 
     /**
      * @param context
@@ -53,6 +60,20 @@ public class PaintDragObject extends View {
             Point point = getDefinedPoint(currentStage, i);
             dragObjects[i] = new DragObject(context, drawableElement(currentStage), point);
         }
+
+        mSensorManager = (SensorManager) context.getSystemService(context.SENSOR_SERVICE);
+
+        mSensorManager.registerListener(this,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+
+        mSensorManager.registerListener(this,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR),
+                SensorManager.SENSOR_DELAY_NORMAL);
+
+        mSensorManager.registerListener(this,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY),
+                SensorManager.SENSOR_DELAY_NORMAL);
 
         setBackgroundForStage(currentStage);
     }
@@ -93,12 +114,9 @@ public class PaintDragObject extends View {
                 " AND " + ResultContract.ResourceEntry.TABLE_NAME + "." +
                 ResultContract.ResourceEntry.COLUMN_TYPE + " = ?";
         Cursor c = db.rawQuery(sql_query, args);
-
-        Log.d(LOG_CLASS, sql_query);
         if (c.moveToFirst()) {
             do {
                 String temp = c.getString(0);
-                Log.d(LOG_CLASS, "From database " + temp);
                 break;
             } while(c.moveToNext());
             if (0 == currentStage) {
@@ -121,7 +139,6 @@ public class PaintDragObject extends View {
         int width = DEFAULT_WIDTH_DEVICE;
         int height = DEFAULT_HEIGHT_DEVICE;
 
-        Log.d(LOG_CLASS, "width : " + width + " height : " + height);
         if (width <= 0) {
             width = 0;
         }
@@ -190,17 +207,8 @@ public class PaintDragObject extends View {
      */
     public int getCurrentStage() {
         if (0 == currentStage) {
-            SQLiteDatabase db = new KCCDbHelper(getContext()).getWritableDatabase();
-            Cursor c = db.rawQuery("SELECT " +
-                    ResultContract.StageEntry._ID +
-                    " FROM " + ResultContract.StageEntry.TABLE_NAME +
-                    " ORDER BY " + ResultContract.StageEntry._ID + " DESC LIMIT 1", null);
-
-            if (c.moveToFirst()) {
-                do {
-                    currentStage = c.getInt(0);
-                } while (c.moveToNext());
-            }
+            StageModel model = new StageModel();
+            currentStage = (int)model.getCurrent(getContext());
         }
         return currentStage;
     }
@@ -229,4 +237,17 @@ public class PaintDragObject extends View {
         canvas.drawBitmap(bg, 0, 0, null);
     }
 
+    /**
+     *
+     * @param event
+     */
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Log.d(LOG_CLASS, "Change " + event.toString());
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        Log.d(LOG_CLASS, "Ocurrance " + event.toString());
+    }
 }
