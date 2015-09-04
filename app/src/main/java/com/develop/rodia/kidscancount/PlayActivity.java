@@ -1,5 +1,7 @@
 package com.develop.rodia.kidscancount;
 
+import android.content.Context;
+import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,11 +9,16 @@ import android.view.MenuItem;
 
 
 public class PlayActivity extends ActionBarActivity {
+    protected PowerManager.WakeLock wakelock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new GameView(this));
+
+        final PowerManager pm=(PowerManager)getSystemService(Context.POWER_SERVICE);
+        this.wakelock=pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "Playing");
+        wakelock.acquire();
     }
 
     @Override
@@ -34,5 +41,24 @@ public class PlayActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        this.wakelock.release();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        this.wakelock.acquire();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle icicle) {
+        super.onSaveInstanceState(icicle);
+        this.wakelock.release();
     }
 }
