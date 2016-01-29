@@ -5,9 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.develop.rodia.kidscancount.model.Counter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,18 +58,16 @@ public class GameView extends SurfaceView {
     }
 
     private void createSprites() {
-        sprites.add(createSprite(R.drawable.bad1));
-        sprites.add(createSprite(R.drawable.bad2));
-        sprites.add(createSprite(R.drawable.bad3));
-        sprites.add(createSprite(R.drawable.bad4));
-        sprites.add(createSprite(R.drawable.bad5));
-        sprites.add(createSprite(R.drawable.bad6));
-        sprites.add(createSprite(R.drawable.good1));
-        sprites.add(createSprite(R.drawable.good2));
-        sprites.add(createSprite(R.drawable.good3));
-        sprites.add(createSprite(R.drawable.good4));
-        sprites.add(createSprite(R.drawable.good5));
-        sprites.add(createSprite(R.drawable.good6));
+        sprites.add(createSprite(R.drawable.catrun));
+        sprites.add(createSprite(R.drawable.catrun2));
+        sprites.add(createSprite(R.drawable.catrun3));
+        sprites.add(createSprite(R.drawable.catrun4));
+        sprites.add(createSprite(R.drawable.catrun5));
+        sprites.add(createSprite(R.drawable.catrun6));
+        sprites.add(createSprite(R.drawable.catrun7));
+        sprites.add(createSprite(R.drawable.catrun8));
+        sprites.add(createSprite(R.drawable.catrun9));
+        sprites.add(createSprite(R.drawable.catrun10));
     }
 
     private Sprite createSprite(int resouce) {
@@ -76,12 +77,14 @@ public class GameView extends SurfaceView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //canvas.drawColor(Color.BLACK);
-        if (canvas == null) return;
-        Bitmap bg =  BitmapFactory.decodeResource(getResources(), R.drawable.bgcielo);
+        if (canvas == null) {
+            Counter.count = 0;
+            return;
+        }
+        Bitmap bg =  BitmapFactory.decodeResource(getResources(), R.drawable.madejas);
         canvas.drawBitmap(bg, 0, 0, null);
+
         for (int i = temps.size() - 1; i >= 0; i--) {
-            temps.get(i).setCount(i + 1);
             temps.get(i).onDraw(canvas);
         }
         for (Sprite sprite : sprites) {
@@ -100,7 +103,9 @@ public class GameView extends SurfaceView {
                     Sprite sprite = sprites.get(i);
                     if (sprite.isCollition(x, y)) {
                         sprites.remove(sprite);
-                        temps.add(new TempSprite(temps, this, x, y, bmpBlood));
+                        TempSprite temp = new TempSprite(temps, this, x, y, bmpBlood);
+                        temp.setCount(++Counter.count);
+                        temps.add(temp);
                         break;
                     }
                 }

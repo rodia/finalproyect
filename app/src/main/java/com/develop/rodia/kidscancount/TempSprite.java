@@ -3,6 +3,7 @@ package com.develop.rodia.kidscancount;
 import java.util.List;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 public class TempSprite {
@@ -26,14 +27,18 @@ public class TempSprite {
     public void onDraw(Canvas canvas) {
         update();
         canvas.drawBitmap(bmp, x, y, null);
-        canvas.drawText(count + "", x, y, new Paint());
+        Paint paint = new Paint();
+
+        paint.setColor(Color.RED);
+        paint.setTextSize(100);
+        canvas.drawText(getCountString(), x, y, paint);
     }
 
     public void setCount(int count) {
         this.count = count;
     }
-    public int getCount() {
-        return this.count;
+    public String getCountString() {
+        return this.count  + "";
     }
 
     private void update() {

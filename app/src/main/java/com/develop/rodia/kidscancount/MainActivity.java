@@ -58,48 +58,8 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            Button button = (Button) rootView.findViewById(R.id.button_activity);
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent;
-                    intent = new Intent(getActivity(), InitStage.class);
-                    startActivity(intent);
-                }
-            });
-
-            button = (Button) rootView.findViewById(R.id.button_hit);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent;
-                    intent = new Intent(getActivity(), HitActivity.class);
-                    startActivity(intent);
-                }
-            });
-
-            button = (Button) rootView.findViewById(R.id.button_award);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent;
-                    intent = new Intent(getActivity(), AwardActivity.class);
-                    startActivity(intent);
-                }
-            });
-
-            button = (Button) rootView.findViewById(R.id.button_phyco);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent;
-                    intent = new Intent(getActivity(), PycoActivity.class);
-                    startActivity(intent);
-                }
-            });
-
-            button = (Button) rootView.findViewById(R.id.button_play);
+            Button button = (Button) rootView.findViewById(R.id.button_play);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
